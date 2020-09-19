@@ -1,0 +1,18 @@
+{
+  "name": "mern-blog-posts",
+  "version": "1.0.0",
+  "description": "Fullstack app built with MongoDB, Express.js, React and Node.js",
+  "main": "index.js",
+  "engines": {
+    "node": "12.18.4",
+    "npm": "6.14.6"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Prashanth Reddy",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
