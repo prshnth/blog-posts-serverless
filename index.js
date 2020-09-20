@@ -11,13 +11,13 @@ const app = express();
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [process.env.COOKIE_KEY || keys.COOKIE_KEY],
+    keys: [keys.COOKIE_KEY],
   })
 );
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect(process.env.MONGOURI || keys.MONGOURI, {
+mongoose.connect(keys.MONGOURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
