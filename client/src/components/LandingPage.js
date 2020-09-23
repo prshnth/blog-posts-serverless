@@ -4,10 +4,6 @@ import { compose } from 'recompose';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { Avatar } from '@material-ui/core';
 import { fetchPostsAndUsers } from '../actions';
@@ -15,15 +11,15 @@ import _ from 'lodash';
 
 const withStyles = (Component) => (props) => {
   const useStyles = makeStyles({
-    cardContainer: {
-      width: 320,
-      height: 200,
-      margin: 10,
-      display: 'flex',
-      flexDirection: 'column',
+    boxContainer: {
+      cursor: 'pointer',
     },
-    cardFooter: {
+    boxFooter: {
       marginTop: 'auto',
+      display: 'flex',
+    },
+    avatar: {
+      marginRight: 10,
     },
   });
   const classes = useStyles();
@@ -58,48 +54,49 @@ class LandingPage extends Component {
         flexWrap='wrap'
       >
         {_.map(this.props.posts, (post) => (
-          <Card className={this.props.classes.cardContainer} key={post._id}>
-            <CardActionArea>
-              <CardContent>
-                <Typography
-                  gutterBottom
-                  variant='h5'
-                  component='h2'
-                  color='primary'
-                >
-                  {post.title}
-                </Typography>
-                <Typography variant='subtitle2' color='textPrimary'>
-                  {post.description}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
+          <Box
+            width={320}
+            height={200}
+            display='flex'
+            flexDirection='column'
+            bgcolor='text.disabled'
+            borderRadius={12}
+            m={1}
+            px={2}
+            pt={2}
+            pb={1}
+            boxShadow={3}
+            className={this.props.classes.boxContainer}
+          >
+            <Typography
+              gutterBottom
+              variant='h5'
+              component='h2'
+              color='primary'
+            >
+              {post.title}
+            </Typography>
+            <Typography variant='subtitle2' gutterBottom>
+              {_.truncate(post.description, { length: 150 })}
+            </Typography>
             {this.props.users[`${post.userId}`] && (
-              <CardActions className={this.props.classes.cardFooter}>
+              <div className={this.props.classes.boxFooter}>
                 <Avatar
                   alt='Cindy Baker'
+                  className={this.props.classes.avatar}
                   src={this.props.users[`${post.userId}`].photo}
                 />
                 <div>
-                  <Typography
-                    variant='subtitle2'
-                    display='block'
-                    color='textPrimary'
-                  >
+                  <Typography variant='subtitle2' display='block'>
                     {this.props.users[`${post.userId}`].displayName}
                   </Typography>
-                  <Typography
-                    variant='caption'
-                    display='block'
-                    gutterBottom
-                    color='textSecondary'
-                  >
+                  <Typography variant='caption' display='block' gutterBottom>
                     {this.getFormattedDate(post.dateCreated)}
                   </Typography>
                 </div>
-              </CardActions>
+              </div>
             )}
-          </Card>
+          </Box>
         ))}
       </Box>
     );
