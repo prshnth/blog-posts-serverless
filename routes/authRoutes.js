@@ -18,6 +18,4 @@ module.exports = (app) => {
     req.logout();
     res.redirect('/');
   });
-
-  app.get('/api/userInfo', (req, res) => res.send(req.user));
 };

@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -13,14 +12,16 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  appBar: {
     flexGrow: 1,
+    backgroundColor: 'inherit',
+    boxShadow: 'none',
   },
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  title: {
-    flexGrow: 1,
+  iconButton: {
+    marginLeft: 'auto',
   },
   blogTitle: {
     textDecoration: 'none',
@@ -41,61 +42,63 @@ const Header = (props) => {
   };
 
   return (
-    <div className={classes.root}>
-      <AppBar position='static'>
-        <Toolbar>
+    <AppBar position='static' className={classes.appBar}>
+      <Toolbar>
+        <IconButton
+          edge='start'
+          className={classes.menuButton}
+          color='inherit'
+          aria-label='menu'
+        >
+          <MenuIcon />
+        </IconButton>
+        <IconButton edge='start' color='inherit' aria-label='home'>
+          <Link to='/'>
+            <span role='img' aria-label='home-emoji'>
+              &#127968;
+            </span>
+          </Link>
+        </IconButton>
+        <div className={classes.iconButton}>
           <IconButton
-            edge='start'
-            className={classes.menuButton}
+            aria-label='account of current user'
+            aria-controls='menu-appbar'
+            aria-haspopup='true'
+            onClick={handleMenu}
             color='inherit'
-            aria-label='menu'
           >
-            <MenuIcon />
+            <GoogleIcon />
           </IconButton>
-          <Typography variant='h6' className={classes.title}>
-            <Link to='/' className={classes.blogTitle}>Blog</Link>
-          </Typography>
-          <div>
-            <IconButton
-              aria-label='account of current user'
-              aria-controls='menu-appbar'
-              aria-haspopup='true'
-              onClick={handleMenu}
-              color='inherit'
+          {props.auth !== null ? (
+            <Menu
+              id='menu-appbar'
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={open}
+              onClose={handleClose}
             >
-              <GoogleIcon />
-            </IconButton>
-            {props.auth !== null ? (
-              <Menu
-                id='menu-appbar'
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                {!!props.auth ? (
-                  <MenuItem onClick={handleClose}>
-                    <MaterialLink href='/api/logout'>Logout</MaterialLink>
-                  </MenuItem>
-                ) : (
-                  <MenuItem onClick={handleClose}>
-                    <MaterialLink href='/auth/google'>Login</MaterialLink>
-                  </MenuItem>
-                )}
-              </Menu>
-            ) : null}
-          </div>
-        </Toolbar>
-      </AppBar>
-    </div>
+              {!!props.auth ? (
+                <MenuItem onClick={handleClose}>
+                  <MaterialLink href='/api/logout'>Logout</MaterialLink>
+                </MenuItem>
+              ) : (
+                <MenuItem onClick={handleClose}>
+                  <MaterialLink href='/auth/google'>Login</MaterialLink>
+                </MenuItem>
+              )}
+            </Menu>
+          ) : null}
+        </div>
+      </Toolbar>
+    </AppBar>
   );
 };
 

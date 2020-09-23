@@ -1,7 +1,37 @@
 import axios from 'axios';
-import { FETCH_USER } from './types';
+import _ from 'lodash';
+import {
+  FETCH_CURRENT_USER,
+  FETCH_USERS,
+  FETCH_USER,
+  FETCH_POSTS,
+} from './types';
 
-export const fetchUser = () => async (dispatch) => {
-  const response = await axios.get('api/userInfo');
+export const fetchCurrentUser = () => async (dispatch) => {
+  const response = await axios.get('/api/currentUserInfo');
+  dispatch({ type: FETCH_CURRENT_USER, payload: response.data });
+};
+
+export const fetchUsers = () => async (dispatch) => {
+  const response = await axios.get('/api/users');
+  dispatch({ type: FETCH_USERS, payload: response.data });
+};
+
+export const fetchUser = (id) => async (dispatch) => {
+  const response = await axios.get(`/api/user/${id}`);
   dispatch({ type: FETCH_USER, payload: response.data });
+};
+
+export const fetchPosts = () => async (dispatch) => {
+  const response = await axios.get('/api/blogPosts');
+  dispatch({ type: FETCH_POSTS, payload: response.data });
+};
+
+export const fetchPostsAndUsers = () => async (dispatch, getState) => {
+  await dispatch(fetchPosts());
+  _.chain(getState().posts)
+    .map('userId')
+    .uniq()
+    .each((id) => dispatch(fetchUser(id)))
+    .value();
 };
