@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -31,13 +32,14 @@ class LandingPage extends Component {
         flexWrap='wrap'
       >
         {_.map(this.props.posts, (post) => (
-          <Post
-            key={post._id}
-            post={post}
-            user={this.props.users[`${post.userId}`]}
-            width={320}
-            height={200}
-          />
+          <Link to={`/post/${post._id}`} key={post._id}>
+            <Post
+              post={post}
+              user={this.props.users[`${post.userId}`]}
+              width={320}
+              height={200}
+            />
+          </Link>
         ))}
       </Box>
     );

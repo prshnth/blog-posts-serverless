@@ -14,3 +14,7 @@ code {
 * {
   color: #d0d0e4;
 }
+
+* a {
+  text-decoration: none;
+}

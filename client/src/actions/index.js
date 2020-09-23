@@ -5,6 +5,7 @@ import {
   FETCH_USERS,
   FETCH_USER,
   FETCH_POSTS,
+  FETCH_POST,
 } from './types';
 
 export const fetchCurrentUser = () => async (dispatch) => {
@@ -25,6 +26,11 @@ export const fetchUser = (id) => async (dispatch) => {
 export const fetchPosts = () => async (dispatch) => {
   const response = await axios.get('/api/blogPosts');
   dispatch({ type: FETCH_POSTS, payload: response.data });
+};
+
+export const fetchPost = (id) => async (dispatch) => {
+  const response = await axios.get(`/api/post/${id}`);
+  dispatch({ type: FETCH_POST, payload: response.data });
 };
 
 export const fetchPostsAndUsers = () => async (dispatch, getState) => {

@@ -25,9 +25,6 @@ const useStyles = makeStyles((theme) => ({
   iconButton: {
     marginLeft: 'auto',
   },
-  linkText: {
-    textDecoration: 'none',
-  },
 }));
 
 const Header = (props) => {
@@ -55,7 +52,7 @@ const Header = (props) => {
           <MenuIcon />
         </IconButton>
         <IconButton edge='start' color='inherit' aria-label='home'>
-          <Link to='/' className={classes.linkText}>
+          <Link to='/'>
             <span role='img' aria-label='home-emoji'>
               &#127968;
             </span>
@@ -63,7 +60,7 @@ const Header = (props) => {
         </IconButton>
         <div className={classes.iconButton}>
           {!!props.auth && (
-            <Link to='/new-post' className={classes.linkText}>
+            <Link to='/new-post'>
               <Button
                 variant='contained'
                 color='primary'

@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import LandingPage from './LandingPage';
 import Header from './Header';
+import PostDetail from './PostDetail';
 import NewPostPage from './NewPostPage';
 import { fetchCurrentUser } from '../actions';
 
@@ -32,7 +33,8 @@ class App extends Component {
             <Header />
             <MainContent>
               <Route exact path='/' component={LandingPage} />
-              <Route exact path='/new-post' component={NewPostPage} />
+              <Route path='/new-post' component={NewPostPage} />
+              <Route path='/post/:id' component={PostDetail} />
             </MainContent>
           </div>
         </BrowserRouter>

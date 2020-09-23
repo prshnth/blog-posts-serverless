@@ -5,12 +5,13 @@ import { Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
 
-const Post = ({ post, user, width, height }) => {
+const Post = ({ post, user, width, height, showContent }) => {
   const useStyles = makeStyles({
     boxContainer: {
       cursor: 'pointer',
     },
     boxFooter: {
+      paddingTop: 10,
       marginTop: 'auto',
       display: 'flex',
     },
@@ -25,10 +26,14 @@ const Post = ({ post, user, width, height }) => {
       new Date(date)
     );
   };
+  if (_.isEmpty(post) || _.isEmpty(user)) {
+    return null;
+  }
 
   return (
     <Box
       width={width}
+      maxWidth={800}
       height={height}
       display='flex'
       flexDirection='column'
@@ -44,9 +49,15 @@ const Post = ({ post, user, width, height }) => {
       <Typography gutterBottom variant='h5' component='h2' color='primary'>
         {post.title}
       </Typography>
-      <Typography variant='subtitle2' gutterBottom>
-        {_.truncate(post.description, { length: 150 })}
-      </Typography>
+      {showContent ? (
+        <Typography variant='subtitle2' gutterBottom>
+          {post.content}
+        </Typography>
+      ) : (
+        <Typography variant='subtitle2' gutterBottom>
+          {_.truncate(post.description, { length: 200 })}
+        </Typography>
+      )}
       {!_.isEmpty(user) && (
         <div className={classes.boxFooter}>
           <Avatar

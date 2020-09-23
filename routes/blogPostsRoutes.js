@@ -12,6 +12,15 @@ module.exports = (app) => {
     }
   });
 
+  app.get('/api/post/:id', async (req, res) => {
+    try {
+      const post = await BlogPost.findOne({ _id: req.params.id });
+      res.send(post);
+    } catch (error) {
+      res.status(422).send(error);
+    }
+  });
+
   app.post('/api/blogPosts', requireLogin, async (req, res) => {
     const { title, description, content } = req.body;
 
