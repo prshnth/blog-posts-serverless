@@ -7,6 +7,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MaterialLink from '@material-ui/core/Link';
+import Button from '@material-ui/core/Button';
+import PostAddIcon from '@material-ui/icons/PostAdd';
 import GoogleIcon from './GoogleIcon';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -23,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   iconButton: {
     marginLeft: 'auto',
   },
-  blogTitle: {
+  linkText: {
     textDecoration: 'none',
   },
 }));
@@ -53,13 +55,25 @@ const Header = (props) => {
           <MenuIcon />
         </IconButton>
         <IconButton edge='start' color='inherit' aria-label='home'>
-          <Link to='/'>
+          <Link to='/' className={classes.linkText}>
             <span role='img' aria-label='home-emoji'>
               &#127968;
             </span>
           </Link>
         </IconButton>
         <div className={classes.iconButton}>
+          {!!props.auth && (
+            <Link to='/new-post' className={classes.linkText}>
+              <Button
+                variant='contained'
+                color='primary'
+                size='small'
+                startIcon={<PostAddIcon />}
+              >
+                Add a new Post
+              </Button>
+            </Link>
+          )}
           <IconButton
             aria-label='account of current user'
             aria-controls='menu-appbar'

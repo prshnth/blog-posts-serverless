@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import LandingPage from './LandingPage';
 import Header from './Header';
+import NewPostPage from './NewPostPage';
 import { fetchCurrentUser } from '../actions';
 
 const MainContainer = styled.div`
@@ -31,6 +32,7 @@ class App extends Component {
             <Header />
             <MainContent>
               <Route exact path='/' component={LandingPage} />
+              <Route exact path='/new-post' component={NewPostPage} />
             </MainContent>
           </div>
         </BrowserRouter>
