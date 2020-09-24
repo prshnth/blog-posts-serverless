@@ -4,12 +4,15 @@ import { Link } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { fetchPostsAndUsers } from '../actions';
+import { fetchPostsAndUsers, fetchCurrentUserPosts } from '../actions';
 import _ from 'lodash';
 import Post from './Post';
 
 class LandingPage extends Component {
   componentDidMount() {
+    if (this.props.match.path === '/user-posts') {
+      return this.props.fetchCurrentUserPosts();
+    }
     this.props.fetchPostsAndUsers();
   }
 
@@ -50,4 +53,7 @@ function mapStateToProps({ posts, users }) {
   return { posts, users };
 }
 
-export default connect(mapStateToProps, { fetchPostsAndUsers })(LandingPage);
+export default connect(mapStateToProps, {
+  fetchPostsAndUsers,
+  fetchCurrentUserPosts,
+})(LandingPage);

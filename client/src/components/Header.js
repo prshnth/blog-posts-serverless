@@ -9,6 +9,13 @@ import Menu from '@material-ui/core/Menu';
 import MaterialLink from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import PostAddIcon from '@material-ui/icons/PostAdd';
+import Drawer from '@material-ui/core/Drawer';
+import Divider from '@material-ui/core/Divider';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import NoteIcon from '@material-ui/icons/Note';
 import GoogleIcon from './GoogleIcon';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -25,11 +32,19 @@ const useStyles = makeStyles((theme) => ({
   iconButton: {
     marginLeft: 'auto',
   },
+  textColor: {
+    color: theme.palette.primary.main,
+  },
+  toolbar: theme.mixins.toolbar,
+  list: {
+    width: 250,
+  },
 }));
 
 const Header = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
   const open = Boolean(anchorEl);
 
   const handleMenu = (event) => {
@@ -40,6 +55,10 @@ const Header = (props) => {
     setAnchorEl(null);
   };
 
+  const handleDrawerToggle = () => {
+    setDrawerOpen(!drawerOpen);
+  };
+
   return (
     <AppBar position='static' className={classes.appBar}>
       <Toolbar>
@@ -48,6 +67,7 @@ const Header = (props) => {
           className={classes.menuButton}
           color='inherit'
           aria-label='menu'
+          onClick={handleDrawerToggle}
         >
           <MenuIcon />
         </IconButton>
@@ -108,6 +128,21 @@ const Header = (props) => {
             </Menu>
           ) : null}
         </div>
+        <Drawer anchor='left' open={drawerOpen} onClose={handleDrawerToggle}>
+          <div className={classes.toolbar} />
+          <Divider />
+          <List className={classes.list} onClick={handleDrawerToggle}>
+            <Link to='/user-posts' key='user-posts'>
+              <ListItem button>
+                <ListItemIcon>{<NoteIcon />}</ListItemIcon>
+                <ListItemText className={classes.textColor}>
+                  All My Posts
+                </ListItemText>
+              </ListItem>
+            </Link>
+            <Divider />
+          </List>
+        </Drawer>
       </Toolbar>
     </AppBar>
   );

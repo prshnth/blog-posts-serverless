@@ -11,9 +11,18 @@ class PostDetail extends Component {
     await this.props.fetchPost(id);
     this.props.fetchUser(this.props.post.userId);
   }
+
   render() {
     if (this.props.post && this.props.user) {
-      return <Post post={this.props.post} user={this.props.user} showContent />;
+      return (
+        <Post
+          post={this.props.post}
+          user={this.props.user}
+          auth={this.props.auth}
+          history={this.props.history}
+          showContent
+        />
+      );
     }
     return (
       <Typography gutterBottom variant='h5' component='h2'>
@@ -23,10 +32,10 @@ class PostDetail extends Component {
   }
 }
 
-function mapStateToProps({ posts, users }, ownProps) {
+function mapStateToProps({ posts, users, auth }, ownProps) {
   const post = _.isEmpty(posts) ? null : posts[ownProps.match.params.id];
   const user = _.isEmpty(post) ? null : users[post.userId];
-  return { post, user };
+  return { post, user, auth };
 }
 
 export default connect(mapStateToProps, { fetchPost, fetchUser })(PostDetail);

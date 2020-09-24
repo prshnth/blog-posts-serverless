@@ -35,6 +35,7 @@ class App extends Component {
               <Route exact path='/' component={LandingPage} />
               <Route path='/new-post' component={NewPostPage} />
               <Route path='/post/:id' component={PostDetail} />
+              <Route path='/user-posts' component={LandingPage} />
             </MainContent>
           </div>
         </BrowserRouter>

@@ -6,6 +6,9 @@ import {
   FETCH_USER,
   FETCH_POSTS,
   FETCH_POST,
+  CREATE_POST,
+  DELETE_POST,
+  FETCH_CURRENT_USER_POSTS,
 } from './types';
 
 export const fetchCurrentUser = () => async (dispatch) => {
@@ -28,6 +31,11 @@ export const fetchPosts = () => async (dispatch) => {
   dispatch({ type: FETCH_POSTS, payload: response.data });
 };
 
+export const fetchCurrentUserPosts = () => async (dispatch) => {
+  const response = await axios.get('/api/user/posts');
+  dispatch({ type: FETCH_CURRENT_USER_POSTS, payload: response.data });
+};
+
 export const fetchPost = (id) => async (dispatch) => {
   const response = await axios.get(`/api/post/${id}`);
   dispatch({ type: FETCH_POST, payload: response.data });
@@ -40,4 +48,15 @@ export const fetchPostsAndUsers = () => async (dispatch, getState) => {
     .uniq()
     .each((id) => dispatch(fetchUser(id)))
     .value();
+};
+
+export const createPost = (values, callback) => async (dispatch) => {
+  const response = await axios.post('/api/blogPosts', values);
+  callback();
+  dispatch({ type: CREATE_POST, payload: response.data });
+};
+
+export const deletePost = (id) => async (dispatch) => {
+  const response = await axios.delete(`/api/post/${id}`);
+  dispatch({ type: DELETE_POST, payload: response.data });
 };
