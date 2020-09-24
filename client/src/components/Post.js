@@ -61,6 +61,7 @@ const Post = ({
     <Box
       width={width}
       maxWidth={800}
+      minWidth={320}
       height={height}
       display='flex'
       flexDirection='column'
