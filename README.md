@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://blog-posts-mern-stack.herokuapp.com/">
-    <img alt="race" src="client/favicon.ico" width="60" />
+    <img alt="race" src="client/public/favicon.ico" width="60" />
   </a>
 </p>
 <p align="center">
